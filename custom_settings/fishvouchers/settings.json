@@ -1,9 +1,6 @@
-[
-  {
+{
     "bannerURL": "resources/images/side-logo-fish.png", 
     "collectionName": "UOGML Fish Collection Web Portal", 
-    "bannerTitle": "UOGML Fish Collection Web Portal"
-  }
-]
-
-
+    "bannerTitle": "UOGML Fish Collection Web Portal",
+    "backgroundURL": "resources/images/fish-background.png"
+}

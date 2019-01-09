@@ -1,7 +1,6 @@
-[
-  {
+{
     "bannerURL": "resources/images/side-logo-coral.png",
     "collectionName": "UOGML Coral Vouchers Collection", 
-    "bannerTitle": "UOGML Coral Colleciton Web Portal"
-  }
-]
+    "bannerTitle": "UOGML Coral Colleciton Web Portal",
+    "backgroundURL": "resources/images/coral-background.png"
+}
