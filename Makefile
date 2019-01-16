@@ -36,7 +36,16 @@ export TOPDIR := $(shell pwd)
 
 all: build
 
-install: install-context-file install-solr-home
+install: refresh-tomcat-cache install-context-file install-solr-home
+
+refresh-tomcat-cache:
+	# removes current war and waits for tomcat to freak out
+	# before actually installing and restarting the server
+	# please help me find a better solution
+	rm $(INSTALL_DIR)/specify-solr.war
+	sleep 5
+	curl localhost:8080
+	# cross your fingers
 
 install-context-file:
 	# Create config file for Tomcat to load our app.
