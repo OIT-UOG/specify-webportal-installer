@@ -42,7 +42,7 @@ refresh-tomcat-cache:
 	# removes current war and waits for tomcat to freak out
 	# before actually installing and restarting the server
 	# please help me find a better solution
-	rm $(INSTALL_DIR)/specify-solr.war
+	rm -f $(INSTALL_DIR)/specify-solr.war
 	sleep 5
 	curl localhost:8080
 	# cross your fingers
