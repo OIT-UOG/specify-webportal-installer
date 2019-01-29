@@ -8,9 +8,10 @@ cloned from [https://github.com/specify/webportal-installer](https://github.com/
 
 1. navigate to the [specify_exports](https://github.com/OIT-UOG/specify-webportal-installer/tree/master/specify_exports) folder
 2. click upload files
-3. add the files, add a comment describing your changes, and click `suggest changes`
-4. finish pull request process
-5. wait for one of the repo admins to merge your request
+3. add the corresponding files (`fishvouchers.zip`, `coralvouchers.zip`)
+4. add a comment below describing your changes, and click `suggest changes`
+5. finish pull request process
+6. wait for one of the repo admins to merge your request
 
 # Installing
 
