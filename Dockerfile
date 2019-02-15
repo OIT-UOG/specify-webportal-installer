@@ -25,4 +25,4 @@ COPY . .
 RUN make 
 RUN make install
 
-EXPOSE 80/tcp
+EXPOSE 8080/tcp
