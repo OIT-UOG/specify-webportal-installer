@@ -14,38 +14,23 @@ INSTALL_DIR := $(SOLR_HOME)
 # Running 'make install-context-file' will create the following
 # context file to alert Tomcat to the web portal app. To make the
 # portal the "default" app, change 'specify-solr.xml' to 'ROOT.xml'.
-TOMCAT_CONTEXT_FILE := /etc/tomcat7/Catalina/localhost/specify-solr.xml
+TOMCAT_CONTEXT_FILE := ${CATALINA_HOME}/conf/Catalina/localhost/specify-solr.xml
 
 # The user and group to set on the installed files. The tomcat user
 # must be in the given group because Solr writes some files to
 # SOLR_HOME.
 INSTALL_UID := $(USER)
-INSTALL_GID := tomcat7
+INSTALL_GID := $(USER)
 
 # Set to false to allow Solr admin page to be available.
 export DISABLE_ADMIN := true
-
-# Mirror for downloading Apache Solr.
-SOLR_MIRROR := http://archive.apache.org/dist/lucene/solr
-
-# Use latest available version of Solr 4.
-export SOLR_VERSION := $(shell curl -s $(SOLR_MIRROR)/ | python get_latest_solr_vers.py)
 
 export SOLR_DIST := solr-$(SOLR_VERSION)
 export TOPDIR := $(shell pwd)
 
 all: build
 
-install: refresh-tomcat-cache install-context-file install-solr-home
-
-refresh-tomcat-cache:
-	# removes current war and waits for tomcat to freak out
-	# before actually installing and restarting the server
-	# please help me find a better solution
-	rm -f $(INSTALL_DIR)/specify-solr.war
-	sleep 5
-	curl localhost:8080
-	# cross your fingers
+install: install-context-file install-solr-home
 
 install-context-file:
 	# Create config file for Tomcat to load our app.
