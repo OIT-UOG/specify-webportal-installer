@@ -16,6 +16,8 @@ INSTALL_DIR := $(SOLR_HOME)
 # portal the "default" app, change 'specify-solr.xml' to 'ROOT.xml'.
 TOMCAT_CONTEXT_FILE := ${CATALINA_HOME}/conf/Catalina/localhost/specify-solr.xml
 
+TOMCAT_SERVING_DIR := ${CATALINA_HOME}/webapps
+
 # The user and group to set on the installed files. The tomcat user
 # must be in the given group because Solr writes some files to
 # SOLR_HOME.
@@ -30,7 +32,7 @@ export TOPDIR := $(shell pwd)
 
 all: build
 
-install: install-context-file install-solr-home
+install: install-context-file install-solr-home install-root
 
 install-context-file:
 	# Create config file for Tomcat to load our app.
@@ -47,6 +49,12 @@ install-solr-home:
 	cp -r build/solr-home/* $(INSTALL_DIR)
 	chown -R $(INSTALL_UID).$(INSTALL_GID) $(INSTALL_DIR)
 	chmod g+w $(INSTALL_DIR)/*/data/index
+
+install-root:
+	rm -rf $(TOMCAT_SERVING_DIR)/ROOT
+	mkdir -p $(TOMCAT_SERVING_DIR)/ROOT
+	cp -r ROOT/* $(TOMCAT_SERVING_DIR)/ROOT
+	chown -R $(INSTALL_UID).$(INSTALL_GID) $(TOMCAT_SERVING_DIR)/ROOT
 
 symlink:
 	ln -s $(INSTALL_DIR) $(SOLR_HOME)
