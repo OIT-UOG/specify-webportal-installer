@@ -14,6 +14,9 @@ INSTALL_DIR := $(SOLR_HOME)
 # Running 'make install-context-file' will create the following
 # context file to alert Tomcat to the web portal app. To make the
 # portal the "default" app, change 'specify-solr.xml' to 'ROOT.xml'.
+ifndef CATALINA_HOME
+  export CATALINA_HOME:= /var/lib/tomcat7 
+endif
 TOMCAT_CONTEXT_FILE := ${CATALINA_HOME}/conf/Catalina/localhost/specify-solr.xml
 
 TOMCAT_SERVING_DIR := ${CATALINA_HOME}/webapps
