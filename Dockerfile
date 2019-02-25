@@ -23,6 +23,6 @@ RUN mkdir -p ${CATALINA_HOME}/conf/Catalina/localhost
 COPY . . 
 
 RUN make 
-RUN make install
+RUN make docker-install
 
 EXPOSE 8080/tcp

@@ -1,0 +1,9 @@
+.git
+.gitignore
+LICENSE
+*README.md
+Dockerfile
+.dockerignore
+jenkins_pull_make_install.sh
+*/README*
+PortalApp/doc/*
