@@ -27,12 +27,30 @@ INSTALL_GID := $(USER)
 # Set to false to allow Solr admin page to be available.
 export DISABLE_ADMIN := true
 
+# Mirror for downloading Apache Solr.
+SOLR_MIRROR := http://archive.apache.org/dist/lucene/solr
+
+# Use latest available version of Solr 4.
+ifndef SOLR_VERSION
+  export SOLR_VERSION := $(shell curl -s $(SOLR_MIRROR)/ | python get_latest_solr_vers.py)
+endif
 export SOLR_DIST := solr-$(SOLR_VERSION)
 export TOPDIR := $(shell pwd)
 
 all: build
 
-install: install-context-file install-solr-home install-root
+install: refresh-tomcat-cache install-context-file install-solr-home install-root
+
+docker-install: install-context-file install-solr-home install-root
+
+refresh-tomcat-cache:
+	# removes current war and waits for tomcat to freak out
+	# before actually installing and restarting the server
+	# please help me find a better solution
+	rm -f $(INSTALL_DIR)/specify-solr.war
+	sleep 5
+	curl localhost:8080
+	# cross your fingers
 
 install-context-file:
 	# Create config file for Tomcat to load our app.
