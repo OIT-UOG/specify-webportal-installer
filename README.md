@@ -15,6 +15,31 @@ cloned from [https://github.com/specify/webportal-installer](https://github.com/
 
 # Installing
 
+The webportal has been set up as a Docker container for ease of deployment. That being said, you will need to install Docker and Docker Compose for deploy this way.  
+
+* ensure [Docker](https://docs.docker.com/install/linux/docker-ce/ubuntu/) and [Docker Compose](https://github.com/docker/compose/releases) are installed
+
+There are development and production compose files, their differences are small but are listed below.
+
+## DEVELOPMENT
+
+* served only over port 80 (no ssl)
+* `SP_HOST` env var defaults to `localhost`
+* to run, simple run `docker-compose up -d` from the repo directory
+
+## PRODUCTION
+
+* served only over port 443 (ssl certs required)
+* `SP_HOST` env var defaults to `specifyportal.uog.edu`
+* `SP_CERTS_PATH` env var is **required** and should point to the directory on the host machine that contains the ssl certs to use
+* to run, run `docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d` from the repo directory 
+
+You can add your environment variables to the begginning of your docker-compose commands if you'd prefer like so:
+
+`SP_HOST=<HOST> SP_CERTS_PATH=<PATH> docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d`
+
+## Non-Docker install
+
 see the [old README](oldREADME.md).
 
 # Putting on the Jenkins build network
