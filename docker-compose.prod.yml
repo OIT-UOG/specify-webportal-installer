@@ -1,0 +1,12 @@
+version: '3'
+services:
+  web:
+    environment:
+      - PRODUCTION=true
+      - VIRTUAL_HOST=${SP_HOST:-specifyportal.uog.edu}
+
+  nginx:
+    ports:
+      - "443:443"
+    volumes:
+      - ${SP_CERTS_PATH}:/etc/nginx/certs

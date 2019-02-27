@@ -1,0 +1,10 @@
+version: '3'
+services:
+  web:
+    environment:
+      - VIRTUAL_HOST=${SP_HOST:-localhost}
+      - DEBUG=true
+
+  nginx:
+    ports:
+      - "80:80"
