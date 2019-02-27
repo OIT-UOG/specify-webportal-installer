@@ -7,9 +7,6 @@ RUN apt-get install -y make
 ENV install_dir /webportal-installer
 RUN mkdir -p $install_dir
 WORKDIR $install_dir
-COPY get_latest_solr_vers.py .
-ENV SOLR_VERSION 4.7.2
-RUN wget http://archive.apache.org/dist/lucene/solr/${SOLR_VERSION}/solr-${SOLR_VERSION}.tgz
 
 # I think this is just to install jar for make, so probably can just use some generic zipping utility instead
 RUN apt-get install debian-keyring debian-archive-keyring
@@ -20,6 +17,11 @@ RUN echo "Pin-Priority: -200" >> /etc/apt/preferences.d/debian-jessie-backports
 RUN apt-get update && apt-get -t jessie-backports install -y openjdk-8-jdk-headless
 
 RUN mkdir -p ${CATALINA_HOME}/conf/Catalina/localhost
+
+COPY get_latest_solr_vers.py .
+ENV SOLR_VERSION 4.7.2
+RUN wget http://archive.apache.org/dist/lucene/solr/${SOLR_VERSION}/solr-${SOLR_VERSION}.tgz
+
 COPY . . 
 
 RUN make 
