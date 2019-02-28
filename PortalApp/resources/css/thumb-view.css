@@ -51,6 +51,7 @@ div[id^='spthumbnail'] {
     background-size: cover;
     overflow:hidden;
     margin: 0 0 .714rem .714rem;
+    position: relative;
     
     /*float: left;*/
     /*margin: 4px;*/
@@ -58,6 +59,20 @@ div[id^='spthumbnail'] {
     margin-right: 0;
     //padding: 1px; <-- what was that? :/
     */
+}
+
+*.tv-thumb-wrap:hover {
+    box-shadow: 0 0 1px 1px rgba(153, 187, 232, 1);
+}
+
+.tv-thumb-summary {
+    background: rgba(0,0,0,.3);
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 5px;
+    font-size: 12px;
 }
 
 *.tv-thumb-wrap[data-width=thinner] {

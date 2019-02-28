@@ -25,6 +25,11 @@
  *
  */
 
+function setDataWidthAndSummary(self){
+	setParentDataWidth(self)
+	setSummary(self, self.title)
+}
+
 function setParentDataWidth(self){
 	// determine data value based on ratio
 	var elem=self.parentNode;
@@ -38,6 +43,15 @@ function setParentDataWidth(self){
 	if (adjusted_width) {
 		elem.setAttribute('data-width', adjusted_width);
 	}
+}
+
+function setSummary(self, desc) {
+	var gi = desc.search('Genus');
+	if (gi >= 0) {
+		desc = desc.substr(gi);
+		desc = desc.substr(desc.search(':')+1).trim();
+	}
+	self.insertAdjacentHTML('afterend', "<div class=\"tv-thumb-summary\">" + desc + "</div>");
 }
 
 Ext.define('SpWebPortal.view.ThumbnailView', {
@@ -75,8 +89,8 @@ Ext.define('SpWebPortal.view.ThumbnailView', {
 		'<div class="tv-thumb-wrap" id="{AttachmentID}" style="background-image: url({ThumbSrc});">',
 		//'<div class="tv-thumb"><img src="' + settings.get('imageBaseUrl') + '/{AttachmentLocation}" title="{AttachedToDescr} - {Title}"></div>',
 		//'<div class="tv-thumb"><img src="{ThumbSrc}" title="{AttachedToDescr} - {Title}"></div>',
-		'<img class="tv-thumb" src="{ThumbSrc}" title="{AttachedToDescr}"\
-		onload="setParentDataWidth(this);"\
+		'<img class="tv-thumb" src="{ThumbSrc}" title="{AttachedToDescr}" \
+		onload="setDataWidthAndSummary(this);"\
 		>',
 		//'<span class="x-editable">{shortName}</span>
 		'</div>',
