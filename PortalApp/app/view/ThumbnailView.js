@@ -86,7 +86,7 @@ Ext.define('SpWebPortal.view.ThumbnailView', {
 	Ext.apply(this, {
 	    tpl: [
 		'<tpl for=".">',
-		'<div class="tv-thumb-wrap" id="{AttachmentID}" style="background-image: url({ThumbSrc});">',
+		'<div class="tv-thumb-wrap" id="{AttachmentID}" title="{AttachedToDescr}" style="background-image: url({ThumbSrc});">',
 		//'<div class="tv-thumb"><img src="' + settings.get('imageBaseUrl') + '/{AttachmentLocation}" title="{AttachedToDescr} - {Title}"></div>',
 		//'<div class="tv-thumb"><img src="{ThumbSrc}" title="{AttachedToDescr} - {Title}"></div>',
 		'<img class="tv-thumb" src="{ThumbSrc}" title="{AttachedToDescr}" \
