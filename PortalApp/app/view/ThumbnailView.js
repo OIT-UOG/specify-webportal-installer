@@ -24,6 +24,22 @@
  * Individual thumbnail view.
  *
  */
+
+function setParentDataWidth(self){
+	// determine data value based on ratio
+	var elem=self.parentNode;
+	var ratio = self.naturalWidth / self.naturalHeight;
+	var adjusted_width = 
+		ratio > 2 ? "widest" :
+		ratio > 1.8 ? "wider" :
+		ratio > 1.4 ? "wide" :
+		ratio < .6 ? "thinner" :
+		ratio < .8 ? "thin" : false;
+	if (adjusted_width) {
+		elem.setAttribute('data-width', adjusted_width);
+	}
+}
+
 Ext.define('SpWebPortal.view.ThumbnailView', {
     extend: 'Ext.view.View',
     xtype: 'spthumbnail',
@@ -56,10 +72,12 @@ Ext.define('SpWebPortal.view.ThumbnailView', {
 	Ext.apply(this, {
 	    tpl: [
 		'<tpl for=".">',
-		'<div class="tv-thumb-wrap" id="{AttachmentID}">',
+		'<div class="tv-thumb-wrap" id="{AttachmentID}" style="background-image: url({ThumbSrc});">',
 		//'<div class="tv-thumb"><img src="' + settings.get('imageBaseUrl') + '/{AttachmentLocation}" title="{AttachedToDescr} - {Title}"></div>',
 		//'<div class="tv-thumb"><img src="{ThumbSrc}" title="{AttachedToDescr} - {Title}"></div>',
-		'<table class="tv-thumb"><tr><td><img src="{ThumbSrc}" title="{AttachedToDescr}"></td></tr></table>',
+		'<img class="tv-thumb" src="{ThumbSrc}" title="{AttachedToDescr}"\
+		onload="setParentDataWidth(this);"\
+		>',
 		//'<span class="x-editable">{shortName}</span>
 		'</div>',
 		'</tpl>',

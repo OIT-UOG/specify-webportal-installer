@@ -2,18 +2,33 @@
     background: white;
     font: 11px Arial, Helvetica, sans-serif;
 }
+/* A lot of this taken from or inspired by GBIF's image gallery */
+div[id^='spthumbnail'] {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    margin-top: .714rem;
+    margin-right: .714rem;
+}
 *.tv-thumb{
+    display: none;
     /*background: #dddddd;*/
     padding: 0;
-    height: 207px;
-    width: 207px;
+    height: 180px;
+    max-width: 100%;
+    
+    /*width: 207px;*/
     /*height: 127px;
     width: 127px;*/
-    line-height: 1px;
-    text-align: center;
+    /*line-height: 1px;*/
+    /*text-align: center;*/
     vertical-align: middle;
-    margin: 0;
-    border:1px solid #dddddd;
+    /*border:1px solid #dddddd;*/
 }
 
 *.tv-thumb::after {
@@ -21,27 +36,50 @@
     visibility: hidden;
 }
 
-.x-quirks .tv-thumb {
+.x-quirks {
     padding-bottom: 1px;
 }
 
-*.tv-thumb td{
-    /*max-height: 200px;
-    max-width: 200px;*/
-
-    /*display: block;
-    margin: auto;*/
-
-    vertical-align: middle;
-    text-align: center;
-}
-
 *.tv-thumb-wrap{
-    float: left;
+    display:block;
+    width:180px;
+    height:180px;
+    flex: 1 1 auto;
+    -webkit-box-flex: 1;
+    -ms-flex: 1 1 auto;
+    background: center no-repeat #eee;
+    background-size: cover;
+    overflow:hidden;
+    margin: 0 0 .714rem .714rem;
+    
+    /*float: left;*/
     /*margin: 4px;*/
+    /*
     margin-right: 0;
-    //padding: 1px;
+    //padding: 1px; <-- what was that? :/
+    */
 }
+
+*.tv-thumb-wrap[data-width=thinner] {
+    width: 108px;
+}
+
+*.tv-thumb-wrap[data-width=thin] {
+    width: 135px
+}
+
+*.tv-thumb-wrap[data-width=wide] {
+    width: 270px;
+}
+
+*.tv-thumb-wrap[data-width=wider] {
+    width: 324px
+}
+
+*.tv-thumb-wrap[data-width=widest] {
+    width: 360px
+}
+
 *.tv-thumb-wrap span {
     
     display: block;
@@ -52,14 +90,14 @@
 
 *.tv-x-item-over{
     /*border:1px solid #dddddd;*/
-    background: #efefef url(over.gif) repeat-x left top;
+    /*background: #efefef url(over.gif) repeat-x left top;*/
     /*padding: 1px;*/
 }
 
 *.tv-x-item-selected{
-    background: #eff5fb url(selected.gif) no-repeat right bottom;
+    /*background: #eff5fb url(selected.gif) no-repeat right bottom;*/
     border:1px solid #99bbe8;
-    padding: 1px;
+    /*padding: 1px;*/
 }
 *tv-.x-item-selected .thumb{
     background:transparent;
@@ -67,11 +105,11 @@
 
 *.tv-loading-indicator {
     font-size:11px;
-    background-image:url(loading.gif);
+/*    background-image:url(loading.gif);
     background-repeat: no-repeat;
     background-position: left;
     padding-left:20px;
-    margin:10px;
+    margin:10px;*/
 }
 
 .x-view-selector {
