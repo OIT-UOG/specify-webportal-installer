@@ -50,7 +50,7 @@ function setSummary(self, desc) {
 	if (gi >= 0) {
 		var newdesc = desc.substr(gi);
 		newdesc = newdesc.substr(newdesc.search(':')+1).trim();
-		desc = newdesc || desc
+		desc = newdesc || desc.substr(0, gi).trim()
 	}
 	self.insertAdjacentHTML('afterend', "<div class=\"tv-thumb-summary\">" + desc + "</div>");
 }
