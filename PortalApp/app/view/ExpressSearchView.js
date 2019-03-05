@@ -23,7 +23,7 @@ Ext.define('SpWebPortal.view.ExpressSearchView', {
     alias: 'widget.expressSrch',
 
     //localizable text...
-    expressSearchTitle: 'Express',
+    expressSearchTitle: 'Quick Search',
     searchBtnHint: 'enter a search term',
     matchAny: 'Any ',
     matchAll: 'All',
