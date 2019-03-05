@@ -31,7 +31,7 @@ Ext.define('SpWebPortal.view.Viewport', {
     pagerDisplayMsg: 'Displaying records {0} - {1} of {2}',
     pagerEmptyMsg: 'No records to display',
     searchToolsTitle: 'Search Tools',
-    mapsCheckBox: 'Geo Coords',
+    mapsCheckBox: 'Geo Coords ',
     mapsCheckBoxTip: 'Check to select only records with geo-coordinates',
     imagesCheckBox: 'Images',
     imagesCheckBoxTip: 'Check to select only records with images',
@@ -213,7 +213,7 @@ Ext.define('SpWebPortal.view.Viewport', {
 			xtype: 'panel',
 			region: 'north',
 			layout: 'hbox',
-			height: 25,
+			height: 30,
 			items: [
 			    {
 				xtype: 'checkbox',
