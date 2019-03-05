@@ -48,7 +48,7 @@ function setParentDataWidth(self){
 function setSummary(self, desc) {
 	var gi = desc.search('Genus');
 	if (gi >= 0) {
-		newdesc = desc.substr(gi);
+		var newdesc = desc.substr(gi);
 		newdesc = newdesc.substr(newdesc.search(':')+1).trim();
 		desc = newdesc || desc
 	}
