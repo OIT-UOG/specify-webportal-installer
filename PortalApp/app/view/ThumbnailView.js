@@ -48,8 +48,9 @@ function setParentDataWidth(self){
 function setSummary(self, desc) {
 	var gi = desc.search('Genus');
 	if (gi >= 0) {
-		desc = desc.substr(gi);
-		desc = desc.substr(desc.search(':')+1).trim();
+		newdesc = desc.substr(gi);
+		newdesc = newdesc.substr(newdesc.search(':')+1).trim();
+		desc = newdesc || desc
 	}
 	self.insertAdjacentHTML('afterend', "<div class=\"tv-thumb-summary\">" + desc + "</div>");
 }
