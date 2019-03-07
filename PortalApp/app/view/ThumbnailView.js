@@ -96,7 +96,7 @@ Ext.define('SpWebPortal.view.ThumbnailView', {
 		//'<span class="x-editable">{shortName}</span>
 		'</div>',
 		'</tpl>',
-		'<div class="x-clear"></div>'
+		'<div class="x-clear flex-more"></div>'
 	    ]
 	});
 

@@ -40,6 +40,38 @@ div[id^='spthumbnail'] {
     padding-bottom: 1px;
 }
 
+/*#spwpmainimageview-body .flex-more:hover {
+    background: #ccc;
+}
+*/
+#spwpmainimageview-body .flex-more {
+/*    height: 180px;
+    font-size: 14px;*/
+    -webkit-box-flex: 100;
+    -ms-flex: 100 1 auto;
+    flex: 100 1 auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    /*color: #888;*/
+    /*min-width: 100px;*/
+    margin: 0 0 .714rem .714rem;
+    /*padding: 1.42857142857rem;*/
+    /*border: 1px solid #888;*/
+    /*background: 0 0;*/
+    -webkit-transition: background .3s ease;
+    transition: background .3s ease;
+    /*cursor: pointer;*/
+}
+
 *.tv-thumb-wrap{
     display:block;
     width:180px;
