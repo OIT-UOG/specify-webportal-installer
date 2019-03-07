@@ -90,7 +90,7 @@ Ext.define('SpWebPortal.view.ThumbnailView', {
 		'<div class="tv-thumb-wrap" id="{AttachmentID}" title="{AttachedToDescr}" style="background-image: url({ThumbSrc});">',
 		//'<div class="tv-thumb"><img src="' + settings.get('imageBaseUrl') + '/{AttachmentLocation}" title="{AttachedToDescr} - {Title}"></div>',
 		//'<div class="tv-thumb"><img src="{ThumbSrc}" title="{AttachedToDescr} - {Title}"></div>',
-		'<img class="tv-thumb" src="{ThumbSrc}" title="{AttachedToDescr}" \
+		'<img class="tv-thumb" src="{ThumbSrc}" title="{Title}" \
 		onload="setDataWidthAndSummary(this);"\
 		>',
 		//'<span class="x-editable">{shortName}</span>
