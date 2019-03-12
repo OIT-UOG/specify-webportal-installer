@@ -1,6 +1,6 @@
 # UOG Specify web portal
 
-This repo isn't meant to be published as we unignored `/specify_exports/` to ease tracking, updating, and to facilitate jenkins builds  
+Public internal repo of the [GEC Biorepository Specify Portal](https://specifyportal.uog.edu/)
 
 cloned from [https://github.com/specify/webportal-installer](https://github.com/specify/webportal-installer)  
 
