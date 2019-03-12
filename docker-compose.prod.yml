@@ -1,11 +1,13 @@
 version: '3'
 services:
   web:
+    restart: always
     environment:
       - PRODUCTION=true
       - VIRTUAL_HOST=${SP_HOST:-specifyportal.uog.edu}
 
   nginx:
+    restart: always
     ports:
       - "443:443"
     volumes:
