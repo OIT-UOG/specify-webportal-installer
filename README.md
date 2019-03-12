@@ -46,8 +46,4 @@ see the [old README](oldREADME.md).
 
 1. create a user and ssh credentials for Jenkins
 1. duplicate the build job in jenkins, add/change credentials, paths, branches, etc.
-1. place that user in the tomcat7 group
-1. give that user and/or group rw permissions on the repo dir
-1. give that group rw permissions for `/var/lib/specify-solr`
-1. give that group rw permissions for `/etc/tomcat7/Catalina/localhost/specify-solr.xml`
-1. give jenkins permission to restart tomcat `<JENKINS_USER> ALL=NOPASSWD: /usr/sbin/service tomcat7 restart`
+1. place that user in the docker group
