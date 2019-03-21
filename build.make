@@ -1,5 +1,5 @@
 
-all: solr-home setting_templates
+all: solr-home setting_templates google_analytics
 
 ifeq ($(DISABLE_ADMIN),true)
 WEB_XML := ../no_admin_web.xml
@@ -7,7 +7,7 @@ else
 WEB_XML := ../with_admin_web.xml
 endif
 
-cores: $(TOPDIR)/core.make $(TOPDIR)/$(SOLR_DIST) \
+cores: $(TOPDIR)/PortalApp/index.html $(TOPDIR)/core.make $(TOPDIR)/$(SOLR_DIST) \
 		 $(TOPDIR)/specify_exports  $(TOPDIR)/specify_exports/*.zip
 	# We build a Solr core and webapp instance for
 	# each subdir in specify_exports.
@@ -33,12 +33,27 @@ setting_templates: $(TOPDIR)/make_settings_template.py $(TOPDIR)/make_fields_tem
 			> "$@/$$corename/fldmodel.json" ; \
 	done
 
-index.html: $(TOPDIR)/make_toplevel_index.py $(TOPDIR)/index_skel.html cores
+google_analytics: index.html $(TOPDIR)/PortalApp/index.html $(TOPDIR)/ROOT/index.html
+
+$(TOPDIR)/google_analytics.html:
+	# No google analytics code provided
+	touch $(TOPDIR)/google_analytics.html
+
+$(TOPDIR)/PortalApp/index.html: $(TOPDIR)/PortalApp/index_skel.html $(TOPDIR)/google_analytics.html $(TOPDIR)/insert_google_analytics.py
+	python $(TOPDIR)/insert_google_analytics.py $(TOPDIR)/PortalApp/index_skel.html $(TOPDIR)/google_analytics.html > $@
+
+$(TOPDIR)/ROOT/index.html: $(TOPDIR)/ROOT/index_skel.html $(TOPDIR)/google_analytics.html $(TOPDIR)/insert_google_analytics.py
+	python $(TOPDIR)/insert_google_analytics.py $(TOPDIR)/ROOT/index_skel.html $(TOPDIR)/google_analytics.html > $@
+
+index.html: $(TOPDIR)/make_toplevel_index.py $(TOPDIR)/index_skel.html cores $(TOPDIR)/insert_google_analytics.py $(TOPDIR)/google_analytics.html
 	python $(TOPDIR)/make_toplevel_index.py $(TOPDIR)/index_skel.html \
-		cores/*/webapp/resources/config/settings.json > $@
+		cores/*/webapp/resources/config/settings.json > __temp_index.html
+	# add google analytics
+	python $(TOPDIR)/insert_google_analytics.py __temp_index.html $(TOPDIR)/google_analytics.html > $@
+	rm __temp_index.html
 
 specify-solr.war: $(TOPDIR)/unpacked-war $(TOPDIR)/$(SOLR_DIST) index.html \
-		$(TOPDIR)/PortalApp $(TOPDIR)/log4j.properties $(WEB_XML) cores
+		$(TOPDIR)/PortalApp $(TOPDIR)/PortalApp/index.html $(TOPDIR)/log4j.properties $(WEB_XML) cores
 
 	# Building directory for WAR file.
 	rm -rf specify-solr
