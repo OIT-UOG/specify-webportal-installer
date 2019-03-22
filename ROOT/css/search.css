@@ -1,0 +1,61 @@
+.search {
+	color: black;
+	padding: 0rem 5rem;
+}
+.search select {
+	width: 100%;
+}
+
+
+.search-entry {
+    padding-top: 4px;
+    padding-bottom: 3px
+}
+
+.search-entry-img {
+    float: left;
+    width: 60px;
+    margin-right: 10px
+}
+
+.search-entry-img img {
+    width: 100%;
+    height: auto;
+    border-radius: 2px
+}
+
+.search-entry-meta {
+    margin-left: 70px
+}
+
+.search-entry-title {
+    color: black;
+    font-weight: 700;
+    word-wrap: break-word;
+    line-height: 1.1;
+    margin-bottom: 4px
+}
+
+/*.select2-result-repository__forks,.select2-result-repository__stargazers {
+    margin-right: 1em
+}
+
+.select2-result-repository__forks,.select2-result-repository__stargazers,.select2-result-repository__watchers {
+    display: inline-block;
+    color: #aaa;
+    font-size: 11px
+}*/
+
+.search-entry-description {
+    font-size: 13px;
+    color: #777;
+    margin-top: 4px
+}
+
+/*.select2-results__option--highlighted .select2-result-repository__title {
+    color: white
+}
+
+.select2-results__option--highlighted .select2-result-repository__forks,.select2-results__option--highlighted .select2-result-repository__stargazers,.select2-results__option--highlighted .select2-result-repository__description,.select2-results__option--highlighted .select2-result-repository__watchers {
+    color: #c6dcef
+}*/
