@@ -1,7 +1,9 @@
 $(document).ready(function() {
 	$('#mainsearch').select2({
 		ajax: {
-			url: 'specify-solr/fishvouchers/select',
+			url: function (params) {
+				return 'specify-solr/' + $('#collectionchoice').val().split('|')[0] + '/select'
+			},
 			dataType: 'json',
 			delay: 250,
 			data: function (params) {
@@ -81,13 +83,15 @@ $(document).ready(function() {
 	 					imgs = parseNonStrictJson(item.img)
 	 					console.log(imgs);
 
-	 					item.imgs = imgs;
-	 					if (imgs) {
-	 						item.first_img = imgs[0];
-	 						// TODO: check collection choice prior
-	 						// TODO: get image server url from elsewhere?
-	 						item.img_url_prefix = 'http://specifyimage.uog.edu:8080/fileget?coll=UOG+Fish+Vouchers+Collection&type=T&scale=100&filename='
-	 					}
+ 						item.imgs = imgs;
+ 						item.first_img = imgs[0];
+ 						// TODO: check collection choice prior
+ 						// TODO: get image server url from elsewhere?
+ 						item.img_url_prefix = 'http://specifyimage.uog.edu:8080/fileget?coll=UOG+Fish+Vouchers+Collection&type=T&scale=100&filename='
+	 				} else {
+ 						item.imgs = []
+ 						item.first_img = {'AttachmentLocation': $('#collectionchoice').val().split('|')[1]}
+ 						item.img_url_prefix = 'images/collections/'
 	 				}
 				})
 				params.page = params.page || 1;
@@ -103,6 +107,7 @@ $(document).ready(function() {
 			},
 			cache: true
 		},
+		width: 'resolve',
 		placeholder: "Search",
 		minimumInputLength: 1,
 		escapeMarkup: function (markup) { return markup; },
@@ -122,17 +127,13 @@ function formatEntry (entry) {
 		return entry.text;
 	}
 
-	var img = "images/collections/fish_15.png"
-	var num_images = 0
-	if (entry.first_img) {
-		img = entry.img_url_prefix + entry.first_img.AttachmentLocation
-		num_images = entry.imgs.length
-	}
+	var img = entry.img_url_prefix + entry.first_img.AttachmentLocation
+	var num_images = entry.imgs.length
 	var title = filterJoin([entry.text, entry.au], ' ')
 	var location = filterJoin([entry.ln, entry.co], ', ')
 	var date_collected = entry.sd
 	var desc = filterJoin(['Collected:' ,location, date_collected], ' ')
-	var has_qeo_coords
+	var has_qeo_coords // ?
 	
 
 	var markup = 
