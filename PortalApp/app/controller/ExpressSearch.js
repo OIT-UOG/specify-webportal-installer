@@ -64,6 +64,7 @@ Ext.define('SpWebPortal.controller.ExpressSearch', {
 	window.onload = () => {
 		initial_search = getParameterByName('q');
 		this.doSearch(null, initial_search);
+		document.querySelector('#spwpmainexpresssrch-targetEl input').value = initial_search
 	}
 	// https://stackoverflow.com/a/1033557
 	window.onunload = function() {}
