@@ -79,6 +79,8 @@ $(document).ready(function() {
 					item.id = item.id || item.spid;
 					item.text = item.text || item.fn;
 					console.log(item.img);
+					var coll = $('#collectionchoice').val().split('|')
+					item.collection = coll[0]
 					if (item.img) {
 	 					imgs = parseNonStrictJson(item.img)
 	 					console.log(imgs);
@@ -90,7 +92,7 @@ $(document).ready(function() {
  						item.img_url_prefix = 'http://specifyimage.uog.edu:8080/fileget?coll=UOG+Fish+Vouchers+Collection&type=T&scale=100&filename='
 	 				} else {
  						item.imgs = []
- 						item.first_img = {'AttachmentLocation': $('#collectionchoice').val().split('|')[1]}
+ 						item.first_img = {'AttachmentLocation': coll[1]}
  						item.img_url_prefix = 'images/collections/'
 	 				}
 				})
@@ -114,6 +116,15 @@ $(document).ready(function() {
 		templateResult: formatEntry,
   		templateSelection: formatEntrySelection
 	});
+	$('#mainsearch').on('select2:select', function(e) {
+		var url = 'specify-solr/'
+		url += e.params.data.collection + '/?q='
+		console.log(e)
+		console.log(e.params.data.fn)
+		url += encodeURIComponent('*' + e.params.data.fn + '*')
+		window.open(url, '_blank')
+		$('#mainsearch').val(null).trigger('change');
+	})
 });
 
 function filterJoin(arr, sep, test) {
