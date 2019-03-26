@@ -13,7 +13,9 @@
 	display: inline-block;
 }
 
-
+.select2-container--default .select2-results>.select2-results__options {
+    max-height: 250px !important;
+}
 
 .search-entry {
     padding-top: 4px;
