@@ -26,7 +26,6 @@ $(document).ready(function() {
 					start: ((params.page || 1)-1) * results_per_page,
 					rows: results_per_page
 				}
-				console.log(query);
 				return query
 			},
 			processResults: function (data, params) {
@@ -79,14 +78,12 @@ $(document).ready(function() {
 					return new ResultItem(item)
 				})
 				params.page = params.page || 1;
- 				console.log(data);
 				var ret = {
 					results: results,
 					pagination: {
 						more: (resp.start + rows) < resp.numFound
 					}
 				};
-				console.log(ret);
 				return ret;
 			},
 			cache: true
@@ -113,7 +110,6 @@ $(document).ready(function() {
 	$('#mainsearch').on('select2:select', function(e) {
 		var url = 'specify-solr/'
 		url += e.params.data.collection + '/?q='
-		console.log(e)
 		url += encodeURIComponent(e.params.data.search_term)
 		window.open(url, '_blank')
 		$('#mainsearch').val(null).trigger('change');
@@ -135,14 +131,11 @@ class ResultItem {
 		this.country = item.co
 		this.date_collected = item.sd
 
-		// console.log(item.img);
 		if (item.img) {
 			var imgs = parseNonStrictJson(item.img)
-			// console.log(imgs);
 
 			this.imgs = imgs;
 			this.first_img = imgs[0];
-			// TODO: check collection choice prior
 			// TODO: get image server url from elsewhere?
 			this.img_url_prefix = 'http://specifyimage.uog.edu:8080/fileget?coll=UOG+Fish+Vouchers+Collection&type=T&scale=100&filename='
 		} else {
@@ -153,7 +146,6 @@ class ResultItem {
 		if (item.newTag) {
 			this.newTag = true
 		}
-		console.log(this);
 	}
 }
 
@@ -179,7 +171,6 @@ function formatEntry (entry) {
 		var num_images = entry.imgs.length
 		var title = filterJoin([entry.text, entry.au], ' ')
 		var location = filterJoin([entry.ln, entry.co], ', ')
-		console.log('location', location)
 		var date_collected = entry.sd
 		var desc = filterJoin(['Collected:' ,location, date_collected], ' ')
 		var has_qeo_coords // ?
