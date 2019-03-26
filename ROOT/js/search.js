@@ -75,26 +75,8 @@ $(document).ready(function() {
 				var resp = data.response;
 				var results = resp.docs;
 				var rows = +data.responseHeader.params.rows
-				$.map(results, function(item) {
-					item.id = item.id || item.spid;
-					item.text = item.text || item.fn;
-					console.log(item.img);
-					var coll = $('#collectionchoice').val().split('|')
-					item.collection = coll[0]
-					if (item.img) {
-	 					imgs = parseNonStrictJson(item.img)
-	 					console.log(imgs);
-
- 						item.imgs = imgs;
- 						item.first_img = imgs[0];
- 						// TODO: check collection choice prior
- 						// TODO: get image server url from elsewhere?
- 						item.img_url_prefix = 'http://specifyimage.uog.edu:8080/fileget?coll=UOG+Fish+Vouchers+Collection&type=T&scale=100&filename='
-	 				} else {
- 						item.imgs = []
- 						item.first_img = {'AttachmentLocation': coll[1]}
- 						item.img_url_prefix = 'images/collections/'
-	 				}
+				results = $.map(results, function(item) {
+					return new ResultItem(item)
 				})
 				params.page = params.page || 1;
  				console.log(data);
@@ -114,18 +96,66 @@ $(document).ready(function() {
 		minimumInputLength: 1,
 		escapeMarkup: function (markup) { return markup; },
 		templateResult: formatEntry,
-  		templateSelection: formatEntrySelection
+  		templateSelection: formatEntrySelection,
+  		tags: true,
+  		createTag: function (params) {
+  			var term = $.trim(params.term)
+  			if (term === '') {
+  				return null
+  			}
+  			return new ResultItem({
+  				id: term,
+  				text: term,
+  				newTag: true
+  			})
+  		}
 	});
 	$('#mainsearch').on('select2:select', function(e) {
 		var url = 'specify-solr/'
 		url += e.params.data.collection + '/?q='
 		console.log(e)
-		console.log(e.params.data.fn)
-		url += encodeURIComponent('*' + e.params.data.fn + '*')
+		url += encodeURIComponent(e.params.data.search_term)
 		window.open(url, '_blank')
 		$('#mainsearch').val(null).trigger('change');
 	})
 });
+
+class ResultItem {
+	constructor(item) {
+		this.raw = item
+		this.id = item.id || item.spid;
+		this.text = item.text || item.fn;
+		this.search_term = '*' + this.text + '*'
+
+		var coll = $('#collectionchoice').val().split('|')
+		this.collection = coll[0]
+
+		this.author = item.au
+		this.city = item.ln
+		this.country = item.co
+		this.date_collected = item.sd
+
+		// console.log(item.img);
+		if (item.img) {
+			var imgs = parseNonStrictJson(item.img)
+			// console.log(imgs);
+
+			this.imgs = imgs;
+			this.first_img = imgs[0];
+			// TODO: check collection choice prior
+			// TODO: get image server url from elsewhere?
+			this.img_url_prefix = 'http://specifyimage.uog.edu:8080/fileget?coll=UOG+Fish+Vouchers+Collection&type=T&scale=100&filename='
+		} else {
+			this.imgs = []
+			this.first_img = {'AttachmentLocation': coll[1]}
+			this.img_url_prefix = 'images/collections/'
+		}
+		if (item.newTag) {
+			this.newTag = true
+		}
+		console.log(this);
+	}
+}
 
 function filterJoin(arr, sep, test) {
 	test = test || Boolean
@@ -138,24 +168,32 @@ function formatEntry (entry) {
 		return entry.text;
 	}
 
-	var img = entry.img_url_prefix + entry.first_img.AttachmentLocation
-	var num_images = entry.imgs.length
-	var title = filterJoin([entry.text, entry.au], ' ')
-	var location = filterJoin([entry.ln, entry.co], ', ')
-	var date_collected = entry.sd
-	var desc = filterJoin(['Collected:' ,location, date_collected], ' ')
-	var has_qeo_coords // ?
-	
-
-	var markup = 
-		"<div class='search-entry clearfix'>" +
-			"<div class='search-entry-img'><img src='" + img + "' /></div>" +
-			"<div class='search-entry-meta'>" + 
-				"<div class='search-entry-title'>" + title + "</div>" + 
-				"<div class='search-entry-description'>" + desc + "</div>" + 
-				"<div class='search-entry-stats'>" + "</div>" + 
-			"</div>" +
-		"</div>";
+	var markup;
+	if (entry.newTag) {
+		markup = 
+			"<div class='search-entry clearfix'>" +
+				"<div class='search-entry-title search-entry-term'>search for " + entry.search_term + "</div>" + 
+			"</div>";
+	} else {
+		var img = entry.img_url_prefix + entry.first_img.AttachmentLocation
+		var num_images = entry.imgs.length
+		var title = filterJoin([entry.text, entry.au], ' ')
+		var location = filterJoin([entry.ln, entry.co], ', ')
+		console.log('location', location)
+		var date_collected = entry.sd
+		var desc = filterJoin(['Collected:' ,location, date_collected], ' ')
+		var has_qeo_coords // ?
+		
+		markup = 
+			"<div class='search-entry clearfix'>" +
+				"<div class='search-entry-img'><img src='" + img + "' /></div>" +
+				"<div class='search-entry-meta'>" + 
+					"<div class='search-entry-title'>" + title + "</div>" + 
+					"<div class='search-entry-description'>" + desc + "</div>" + 
+					"<div class='search-entry-stats'>" + "</div>" + 
+				"</div>" +
+			"</div>";
+	}
 	return markup;
 }
 

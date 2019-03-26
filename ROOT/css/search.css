@@ -44,6 +44,10 @@
     margin-bottom: 4px
 }
 
+.search-entry-term {
+    /* css for the first "search for <text>" entry */
+}
+
 /*.select2-result-repository__forks,.select2-result-repository__stargazers {
     margin-right: 1em
 }
