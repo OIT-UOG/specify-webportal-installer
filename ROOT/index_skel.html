@@ -38,6 +38,8 @@
 		
 	<link rel="stylesheet" href="css/style.css">
 
+	<link rel="stylesheet" href="css/search.css">
+
 
 	<!-- Modernizr JS -->
 	<script src="js/modernizr-2.6.2.min.js"></script>
@@ -45,6 +47,10 @@
 	<!--[if lt IE 9]>
 	<script src="js/respond.min.js"></script>
 	<![endif]-->
+
+	<!-- Live Search -->
+	<script defer src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+	<script defer src="js/search.js"></script>
 
 	</head>
 
@@ -84,6 +90,14 @@
 							<h7 class="to-animate">GEC Biorepository</h7>
 							<h1 class="to-animate">SPECIFY PORTAL</h1>
 							<h2 class="to-animate" style="font-size:15pt">Welcome to the Guam Ecosystems Collaboratorium Biorepository Specify Portal! Select a collection below.</h2>
+							<div class="search">
+								<select class="select2-input select2-default" multiple="multiple" name="search" id="mainsearch"></select>
+								<select name="collection" id="collectionchoice">
+									<option value="fishvouchers|fish_15.png">Fish</option>
+									<option value="coralvouchers|coral_05.png">Coral</option>
+									<option value="diatomvouchers|diatom.png">Diatom</option>
+								</select>
+							</div>
 							<!--<h2 class="to-animate" style="font-size:15pt;">Select a collection below.</h2>-->
 						</div>
 					</div>
@@ -381,6 +395,8 @@
 
 	<!-- Main JS (Do not remove) -->
 	<script src="js/main.js"></script>
+
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 
 	</body>
 </html>

@@ -17,6 +17,18 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 */
+
+// https://stackoverflow.com/a/901144
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+}
+
 Ext.define('SpWebPortal.controller.ExpressSearch', {
     extend: 'SpWebPortal.controller.Search',
     
@@ -48,6 +60,15 @@ Ext.define('SpWebPortal.controller.ExpressSearch', {
 	    }
 	});
 	this.callParent(arguments);
+
+	window.onload = () => {
+		initial_search = getParameterByName('q');
+		document.querySelector('#spwpmainexpresssrch-targetEl input').value = initial_search
+		this.doSearch(null, initial_search.toLowerCase());
+	}
+	// https://stackoverflow.com/a/1033557
+	window.onunload = function() {}
+
     },
 
     onMapSearchClick: function() {
@@ -58,7 +79,7 @@ Ext.define('SpWebPortal.controller.ExpressSearch', {
 	}
     },
     
-    doSearch: function(exportSrc) {
+    doSearch: function(exportSrc, query_override) {
 	//console.info("ExpressSearch doSearch()");
 
         if (this.getWriteToCsv() && "adv" == exportSrc) {
@@ -73,6 +94,9 @@ Ext.define('SpWebPortal.controller.ExpressSearch', {
 	var mainQ = (typeof control[0].value === "undefined" || control[0].value == null || control[0].value == '') 
 	    ? '*' 
 	        : this.escapeForSolr(control[0].value,true);
+	if (query_override) {
+		mainQ = query_override
+	}
 	var filterToMap = (this.getForceFitToMap() || this.getFitToMap()) && (this.mapViewIsActive() || this.getWriteToCsv());
         var dummy_geocoords;
 	var url = solr.getSearchUrl(images, maps, mainQ, filterToMap, this.getMatchAll(), dummy_geocoords, this.getWriteToCsv());
