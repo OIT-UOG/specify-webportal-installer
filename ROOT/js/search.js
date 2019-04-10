@@ -137,7 +137,12 @@ class ResultItem {
 			this.imgs = imgs;
 			this.first_img = imgs[0];
 			// TODO: get image server url from elsewhere?
-			this.img_url_prefix = 'http://specifyimage.uog.edu:8080/fileget?coll=UOG+Fish+Vouchers+Collection&type=T&scale=100&filename='
+			// until we figure out how to get this info from solr's settingsStore
+			if (coll == 'Diatoms') {
+				this.img_url_prefix = 'http://specifyimage2.uog.edu:8080/fileget?coll=University+of+Guam+Herbarium&type=T&scale=100&filename='
+			} else {
+				this.img_url_prefix = 'http://specifyimage.uog.edu:8080/fileget?coll=UOG+Fish+Vouchers+Collection&type=T&scale=100&filename='
+			}
 		} else {
 			this.imgs = []
 			this.first_img = {'AttachmentLocation': coll[1]}
