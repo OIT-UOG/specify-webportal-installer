@@ -86,7 +86,7 @@ endif
 	cp index.html specify-solr/
 
 	# Packaging the Solr WAR file.
-	jar -cf specify-solr.war -C specify-solr/ .
+	cd specify-solr/; zip -r ../specify-solr.war *; cd ..
 
 solr-home: $(TOPDIR)/$(SOLR_DIST) cores specify-solr.war solr.xml
 	# Build the Solr home directory.

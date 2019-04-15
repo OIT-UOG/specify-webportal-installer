@@ -116,4 +116,4 @@ unpacked-war: $(SOLR_DIST)/example/webapps/solr.war
 	# Unpack the example Solr webapp.
 	rm -rf $@
 	mkdir -p unpacked-war
-	cd unpacked-war && jar -xf ../$<
+	cd unpacked-war && unzip ../$<
