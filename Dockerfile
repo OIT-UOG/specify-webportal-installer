@@ -1,4 +1,4 @@
-FROM tomcat:7.0.68
+FROM tomcat:7.0.93
 LABEL maintainer="Chovin Carlson<chovin@guam.net>"
 
 RUN apt-get update && apt-get install -y python
