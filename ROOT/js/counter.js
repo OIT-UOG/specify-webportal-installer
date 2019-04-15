@@ -23,16 +23,19 @@ window.onload = function() {
 	//got these numbers from the current records
 	counts = [
 		{'id': 'specimen-counter-number',
+		 'query': "*",
 		 'count': trunc(2005 + 897 + 7817),
 		 'actual': 0,
 		 'returned': 0,
 		 'exact': false},
 		{'id': 'images-counter-number',
+		 'query': "img:[\%22\%22%20TO%20^]",
 		 'count': trunc(1314 + 553 + 2856),
 		 'actual': 0,
 		 'returned': 0,
 		 'exact': false},
 		{'id': 'geo-tags-counter-number',
+		 'query': "l1:[-180%20TO%20180]+AND+l11:[-180%20TO%20180]",
 		 'count': trunc(897),
 		 'actual': 0,
 		 'returned': 0,
@@ -58,7 +61,7 @@ window.onload = function() {
 				let duration = 2
 				let opts = {'duration': duration}
 				for (let c of counts) {
-					let cu = new CountUp(c['id'], c['count'], opts);
+					let cu = new CountUp(c['id'], c['actual'], opts);
 					cu.start();
 					c['countUp'] = cu;
 				}
@@ -83,16 +86,18 @@ window.onload = function() {
 
 	// do the queries for the counters
 	window.responses_k = []
-	for (let coll of voucherNames) {
-		let url = "specify-solr/" + coll + "/select?wt=json&" + "q=*";
-		$.ajax({url: url, success: function(resp) {
-			resp = JSON.parse(resp);
-			counts[0]['actual'] += resp['response']['numFound']
-			counts[0]['returned'] += 1
-			if (counts[0]['returned'] === voucherNames.length) {
-				counts[0]['exact'] = true
-			}
-		}})
+	for (let co of counts) {
+		for (let coll of voucherNames) {
+			let url = "specify-solr/" + coll + "/select?wt=json&" + "q=" + co['query'];
+			$.ajax({url: url, success: function(resp) {
+				resp = JSON.parse(resp);
+				co['actual'] += resp['response']['numFound']
+				co['returned'] += 1
+				if (co['returned'] === voucherNames.length) {
+					co['exact'] = true
+				}
+			}})
+		}
 	}
 	
 }
