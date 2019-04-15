@@ -1,6 +1,7 @@
-FROM tomcat:7.0.93
+FROM tomcat:7.0.68
 LABEL maintainer="Chovin Carlson<chovin@guam.net>"
 
+RUN sed -i '/jessie-updates/d' /etc/apt/sources.list  # Now archived
 RUN apt-get update && apt-get install -y python
 RUN apt-get install -y make zip unzip
 
