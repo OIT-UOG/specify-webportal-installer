@@ -7,3 +7,4 @@ Dockerfile
 jenkins_pull_make_install.sh
 */README*
 PortalApp/doc/*
+assets

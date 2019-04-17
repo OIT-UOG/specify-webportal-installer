@@ -11,11 +11,17 @@ WORKDIR $install_dir
 
 RUN mkdir -p ${CATALINA_HOME}/conf/Catalina/localhost
 
-COPY get_latest_solr_vers.py .
+COPY solr_src/get_latest_solr_vers.py .
 ENV SOLR_VERSION 4.7.2
 RUN wget http://archive.apache.org/dist/lucene/solr/${SOLR_VERSION}/solr-${SOLR_VERSION}.tgz
 
-COPY . . 
+# RUN rm -rf ${CATALINA_HOME}/webapps/*
+
+COPY custom_settings custom_settings
+COPY solr_src/* ./
+COPY PortalApp PortalApp
+COPY ROOT ROOT
+COPY specify_exports specify_exports
 
 RUN make 
 RUN make docker-install
