@@ -26,4 +26,6 @@ COPY specify_exports specify_exports
 RUN make 
 RUN make docker-install
 
+COPY apps/* ${CATALINA_HOME}/webapps/apps/
+
 EXPOSE 8080/tcp

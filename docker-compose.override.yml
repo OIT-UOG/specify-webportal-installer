@@ -4,6 +4,8 @@ services:
     environment:
       - VIRTUAL_HOST=${SP_HOST:-localhost}
       - DEBUG=true
+    volumes:
+      - ./apps/:${CATALINA_HOME}/webapps/apps/:ro
 
   nginx:
     ports:

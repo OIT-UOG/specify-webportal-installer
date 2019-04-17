@@ -6,3 +6,4 @@
 /example.crontab
 
 .DS_Store
+.env
