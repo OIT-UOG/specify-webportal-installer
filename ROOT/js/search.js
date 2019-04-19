@@ -174,9 +174,9 @@ function formatEntry (entry) {
 	} else {
 		var img = entry.img_url_prefix + entry.first_img.AttachmentLocation
 		var num_images = entry.imgs.length
-		var title = filterJoin([entry.text, entry.au], ' ')
-		var location = filterJoin([entry.ln, entry.co], ', ')
-		var date_collected = entry.sd
+		var title = filterJoin([entry.text, entry.author], ' ')
+		var location = filterJoin([entry.city, entry.country], ', ')
+		var date_collected = entry.date_collected
 		var desc = filterJoin(['Collected:' ,location, date_collected], ' ')
 		var has_qeo_coords // ?
 		
