@@ -2,6 +2,7 @@
   <div id="app">
     <img src="http://guamepscor.uog.edu/sites/default/files/epscor-logo-solid-final-cs6_-_guam_gec-400.png">
     <SimpleSearch/>
+    <ImageList/>
     <ResultList/>
   </div>
 </template>
@@ -9,12 +10,14 @@
 <script>
 import SimpleSearch from './components/SimpleSearch'
 import ResultList from './components/ResultList'
+import ImageList from './components/ImageList'
 
 export default {
   name: 'App',
   components: {
     ResultList,
-    SimpleSearch
+    SimpleSearch,
+    ImageList
   }
 }
 </script>

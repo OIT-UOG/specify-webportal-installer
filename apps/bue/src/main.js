@@ -3,9 +3,12 @@
 import Vue from 'vue'
 import App from './App'
 
+import LazyLoadDirective from './directives/LazyLoadDirective';
 import store from './stores/ResultStore';
 
 Vue.config.productionTip = false
+
+Vue.directive('lazyload', LazyLoadDirective);
 
 /* eslint-disable no-new */
 new Vue({

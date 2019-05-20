@@ -11,13 +11,14 @@ const cache = {
 };
 
 class Image {
-  constructor (collection, id, location, title) {
+  constructor (collection, spid, id, location, title) {
     this.id = id;
     this.location = location;
     this.title = title;
     this.filename = location;
     this.old_name = title;
     this.collection = collection;
+    this.spid = spid;
   }
 }
 
@@ -73,12 +74,15 @@ class Query {
       let url = urls[coll];
       let resp = this.buildResponseFromCache(url);
       if (!resp) {
+        console.log('querying. not in cache');
+        console.log(cache);
         // return null if no more pages
         let raw = await fetch(url);
         resp = this.processResponse(coll, await raw.json());
         this.putResponseInCache(url, coll, resp);
       }
       this.numFound[coll] = resp.numFound;
+      console.log(resp);
       return resp;
     }));
     this.ran = true;
@@ -115,14 +119,16 @@ class Query {
     r = r.response;
     r.docs = r.docs.map(doc => {
       if ('img' in doc) {
-        doc.img = this._parseImages(collection, doc.img);
+        doc.img = this._parseImages(collection, doc);
       }
       return doc;
     });
     r.collection = collection;
     return r;
   }
-  _parseImages (collection, imgsString) {
+  _parseImages(collection, specimen) {
+    let imgsString = specimen.img;
+    let spid = specimen.spid;
     let inObject = false;
     let inString = false;
     let inKey;
@@ -157,7 +163,7 @@ class Query {
           if (c === '}') { // object end
             inObject = false;
             if (current) {
-              imgs.push(new Image(collection, current.id, current.location, current.title));
+              imgs.push(new Image(collection, spid, current.id, current.location, current.title));
               current = undefined;
             }
             continue;
@@ -312,6 +318,7 @@ function isEmpty(obj) {
 export default new Vuex.Store({
   state: {
     loaded: false,
+    customSettings: {},
     collections: [],
     fields: {},
     entries: {},
@@ -341,6 +348,9 @@ export default new Vuex.Store({
     },
     setFields (state, fields) {
       state.fields = fields;
+    },
+    setCustomSettings (state, settings) {
+      state.customSettings = settings;
     },
     setCollections (state, collections) {
       state.collections = collections;
@@ -390,7 +400,7 @@ export default new Vuex.Store({
       context.commit('setQuery', context.state.query = new Query(context.state.collections))
       let fieldData = await Promise.all(
         context.state.collections.map(coll => readFields(coll))
-        );
+      );
       // lots of uncertainty can be introduced by using a single field set
       // especially since we're not really paying attention to the order they're overwriting each other
 
@@ -415,6 +425,18 @@ export default new Vuex.Store({
         return acc
       }, {});
       context.commit('setFields', fields);
+
+      let customSettingsData = await Promise.all(
+        context.state.collections.map(async (coll) => {
+          let resp = await fetch(`${BASE_SOLR_PATH}/${coll}/resources/config/settings.json`);
+          return (await resp.json())[0];
+        })
+      );
+      let customSettings = {};
+      context.state.collections.forEach((coll, i) => {
+        customSettings[coll] = customSettingsData[i];
+      })
+      context.commit('setCustomSettings', customSettings);
       context.commit('setLoadingState', true);
     }
   },
@@ -433,8 +455,28 @@ export default new Vuex.Store({
         return acc;
       }, []);
     },
+    images (state, getters) {
+      return getters.entries.reduce((acc, s) => {
+        if ('img' in s) {
+          acc.push(...s.img);
+        }
+        return acc;
+      }, []);
+    },
+    getSpecimenById (state, getters, collection, spid) {
+      return cache.result_list[collection][spid] || getters.entries.find(e => e.spid === spid);
+    },
     moreToQuery (state) {
       return state.query.hasMorePages();
+    },
+    collectionSettings: (state) => (coll) => {
+      return state.customSettings[coll];
+    },
+    imageUrl: (state, getters) => (coll, filename, size = 200) => {
+      let settings = getters.collectionSettings(coll);
+      let baseUrl = settings.imageBaseUrl;
+      let collName = encodeURIComponent(settings.collectionName);
+      return `${baseUrl}/fileget?coll=${collName}&type=T&filename=${filename}&scale=${size}`
     },
     fieldList (state) {
       return Object.keys(state.fields).map(key => state.fields[key]);
