@@ -43,7 +43,6 @@ export default {
   },
   methods: {
     doSearch: _.debounce(async function() {
-      console.log(this);
       this.isLoading = true
       this.newSearchTerm(this.searchQuery)
       await this.runNewQuery()

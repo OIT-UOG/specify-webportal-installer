@@ -74,15 +74,12 @@ class Query {
       let url = urls[coll];
       let resp = this.buildResponseFromCache(url);
       if (!resp) {
-        console.log('querying. not in cache');
-        console.log(cache);
         // return null if no more pages
         let raw = await fetch(url);
         resp = this.processResponse(coll, await raw.json());
         this.putResponseInCache(url, coll, resp);
       }
       this.numFound[coll] = resp.numFound;
-      console.log(resp);
       return resp;
     }));
     this.ran = true;
