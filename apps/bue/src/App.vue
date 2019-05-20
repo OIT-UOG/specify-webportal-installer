@@ -1,17 +1,20 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
+    <img src="http://guamepscor.uog.edu/sites/default/files/epscor-logo-solid-final-cs6_-_guam_gec-400.png">
+    <SimpleSearch/>
+    <ResultList/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+import SimpleSearch from './components/SimpleSearch'
+import ResultList from './components/ResultList'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ResultList,
+    SimpleSearch
   }
 }
 </script>
