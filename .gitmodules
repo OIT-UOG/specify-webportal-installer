@@ -1,2 +1,3 @@
 [submodule "apps-source/viewer"]
-	url = git://github.com/OIT-UOG/specifyportal-vue.git
+	path = apps-source/viewer
+	url = git@github.com:OIT-UOG/specifyportal-vue.git
