@@ -9,6 +9,7 @@ ENV install_dir /webportal-installer
 RUN mkdir -p $install_dir
 WORKDIR $install_dir
 
+ENV CATALINA_HOME=/usr/local/tomcat
 RUN mkdir -p ${CATALINA_HOME}/conf/Catalina/localhost
 
 COPY solr_src/get_latest_solr_vers.py .
