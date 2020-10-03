@@ -35,9 +35,13 @@ setting_templates: $(TOPDIR)/make_settings_template.py $(TOPDIR)/make_fields_tem
 
 google_analytics: index.html $(TOPDIR)/PortalApp/index.html $(TOPDIR)/ROOT/index.html
 
-$(TOPDIR)/google_analytics.html:
+$(TOPDIR)/ROOT/google_analytics.html:
 	# No google analytics code provided
-	touch $(TOPDIR)/google_analytics.html
+	touch $(TOPDIR)/ROOT/google_analytics.html
+
+$(TOPDIR)/google_analytics.html: $(TOPDIR)/ROOT/google_analytics.html
+	# No google analytics code provided
+	cp $(TOPDIR)/ROOT/google_analytics.html $(TOPDIR)/google_analytics.html
 
 $(TOPDIR)/PortalApp/index.html: $(TOPDIR)/PortalApp/index_skel.html $(TOPDIR)/google_analytics.html $(TOPDIR)/insert_google_analytics.py
 	python $(TOPDIR)/insert_google_analytics.py $(TOPDIR)/PortalApp/index_skel.html $(TOPDIR)/google_analytics.html > $@
