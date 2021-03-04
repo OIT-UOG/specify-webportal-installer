@@ -20,6 +20,11 @@ RUN wget http://archive.apache.org/dist/lucene/solr/${SOLR_VERSION}/solr-${SOLR_
 COPY custom_settings custom_settings
 COPY solr_src/* ./
 COPY PortalApp PortalApp
+
+ARG HARDCODE_HTTPS
+ENV HARDCODE_HTTPS $HARDCODE_HTTPS
+RUN sed -i 's/{HARDCODE_HTTPS}/'$HARDCODE_HTTPS'/g' PortalApp/index_skel.html
+
 COPY ROOT ROOT
 COPY specify_exports specify_exports
 

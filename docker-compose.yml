@@ -1,7 +1,10 @@
 version: '3'
 services:
   web:
-    build: .
+    build:
+      context: .
+      args:
+        - HARDCODE_HTTPS=${HARDCODE_HTTPS:-false}
     environment:
       - VIRTUAL_PORT=8080
 

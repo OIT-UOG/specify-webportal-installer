@@ -32,6 +32,12 @@ Ext.application({
 
     
     init: function () {
+	var base_url = Ext.getStore('SettingsStore').getAt(0).get('imageBaseUrl');
+	if (HARDCODE_HTTPS) {
+		base_url = base_url.replace('http://', 'https://');
+		base_url = base_url.replace(':8080', '');
+		Ext.getStore('SettingsStore').getAt(0).set('imageBaseUrl', base_url);
+	}
 	Ext.getBody().setHTML("");
 
 	Ext.state.Manager.setProvider(new Ext.state.LocalStorageProvider({
